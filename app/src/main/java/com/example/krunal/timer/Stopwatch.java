@@ -21,7 +21,10 @@ public class Stopwatch extends AppCompatActivity {
     boolean stopwatchOFFState = true;
     long StopWatchTime, MillisecondTime, StartTime, UpdateTime = 0L ;
     Handler handler;
-    List ListElementsArrayList;
+    ArrayList ListElementsArrayList;
+    LapViewListAdapter adapter;
+    int lapCount = 0;
+    boolean firstStart = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,16 +39,23 @@ public class Stopwatch extends AppCompatActivity {
 
         handler = new Handler();
 
-        ListElementsArrayList = new ArrayList<String>();
+
+        /*ListElementsArrayList = new ArrayList<String>();
         final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, android.R.id.text1, ListElementsArrayList );
         listView.setAdapter(adapter);
-
+        */
+        ListElementsArrayList = new ArrayList<Lap>();
+        adapter = new LapViewListAdapter(this, R.layout.lap_time_list_view, ListElementsArrayList);
+        listView.setAdapter(adapter);
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(stopwatchOFFState){
-                    StartTime = SystemClock.elapsedRealtime();
+                    if(firstStart) {
+                        StartTime = SystemClock.elapsedRealtime();
+                        firstStart = false;
+                    }
                     handler.postDelayed(runnable, 0);
                     button2.setText("Stop");
                     button1.setText("Lap");
@@ -74,13 +84,17 @@ public class Stopwatch extends AppCompatActivity {
                     textView.setText("00:00.00");
                     lapTimeView.setText("00:00.00");
                     button1.setEnabled(false);
+                    firstStart = true;
+                    lapCount = 0;
                     //clear lap time info-- ListView
                     ListElementsArrayList.clear();
                     adapter.notifyDataSetChanged();
 
                 }else{
                     //If Lap is clicked
-                    ListElementsArrayList.add(0, getStringTime(UpdateTime));
+                    String lapCountString = "Lap " + ++lapCount;
+                    Lap lap = new Lap(lapCountString, getStringTime(UpdateTime));
+                    ListElementsArrayList.add(0, lap);
                     MillisecondTime +=  UpdateTime;
                     StartTime = SystemClock.elapsedRealtime();
                     listView.smoothScrollToPosition(0);

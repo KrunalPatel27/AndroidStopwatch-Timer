@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingTop="5dp"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp"
+    android:paddingBottom="5dp">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="00:00:00"
+        android:layout_alignParentLeft="true"
+        android:fontFamily="serif"
+        android:textSize="18dp"
+        android:id="@+id/lap_time"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Lap 1"
+        android:layout_alignParentRight="true"
+        android:fontFamily="serif"
+        android:textSize="18dp"
+        android:id="@+id/lap_number"/>
+</RelativeLayout>

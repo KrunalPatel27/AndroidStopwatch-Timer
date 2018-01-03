@@ -14,8 +14,7 @@
         android:layout_gravity="end"
         android:paddingRight="50dp"
         android:paddingTop="25dp"
-        android:id="@+id/lapTimeView"
-        />
+        android:id="@+id/lapTimeView" />
     <TextView
         android:id="@+id/timeView"
         android:layout_width="match_parent"
