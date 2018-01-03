@@ -19,12 +19,11 @@ public class Stopwatch extends AppCompatActivity {
     TextView textView, lapTimeView;
     int Seconds, Minutes, MilliSeconds ;
     boolean stopwatchOFFState = true;
-    long StopWatchTime, MillisecondTime, StartTime, UpdateTime = 0L ;
+    long StopWatchTime, MillisecondTime, StartTime, LapTime, UpdateTime = 0L ;
     Handler handler;
     ArrayList ListElementsArrayList;
     LapViewListAdapter adapter;
     int lapCount = 0;
-    boolean firstStart = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,16 +51,14 @@ public class Stopwatch extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(stopwatchOFFState){
-                    if(firstStart) {
-                        StartTime = SystemClock.elapsedRealtime();
-                        firstStart = false;
-                    }
+                    StartTime = SystemClock.elapsedRealtime();
                     handler.postDelayed(runnable, 0);
                     button2.setText("Stop");
                     button1.setText("Lap");
                     button1.setEnabled(true);
                     stopwatchOFFState = false;
                 }else {
+                    LapTime += UpdateTime;
                     MillisecondTime +=  UpdateTime;
                     handler.removeCallbacks(runnable);
                     button2.setText("Start");
@@ -80,11 +77,11 @@ public class Stopwatch extends AppCompatActivity {
                     MillisecondTime = 0L;
                     StartTime = 0L;
                     UpdateTime = 0L ;
+                    LapTime = 0L;
                     button1.setText("Lap");
                     textView.setText("00:00.00");
                     lapTimeView.setText("00:00.00");
                     button1.setEnabled(false);
-                    firstStart = true;
                     lapCount = 0;
                     //clear lap time info-- ListView
                     ListElementsArrayList.clear();
@@ -93,7 +90,8 @@ public class Stopwatch extends AppCompatActivity {
                 }else{
                     //If Lap is clicked
                     String lapCountString = "Lap " + ++lapCount;
-                    Lap lap = new Lap(lapCountString, getStringTime(UpdateTime));
+                    Lap lap = new Lap(lapCountString, getStringTime(UpdateTime + LapTime));
+                    LapTime = 0;
                     ListElementsArrayList.add(0, lap);
                     MillisecondTime +=  UpdateTime;
                     StartTime = SystemClock.elapsedRealtime();
@@ -110,9 +108,8 @@ public class Stopwatch extends AppCompatActivity {
         public void run() {
             UpdateTime = SystemClock.elapsedRealtime() - StartTime;
             StopWatchTime = MillisecondTime + UpdateTime;
-
             textView.setText(getStringTime(StopWatchTime));
-            lapTimeView.setText(getStringTime(UpdateTime));
+            lapTimeView.setText(getStringTime(UpdateTime + LapTime));
             handler.postDelayed(this, 0);
         }
     };
