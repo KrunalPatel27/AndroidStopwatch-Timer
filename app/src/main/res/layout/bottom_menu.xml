@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="50dp"
+    android:orientation="horizontal"
+    android:weightSum="2"
+    android:layout_alignParentBottom="true"
+    android:background="#3F51B5">
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:id="@+id/left_button"
+        android:text="Timer"
+        android:textColor="#E8EAF6"
+        android:background="@android:color/transparent" />
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Stopwatch"
+        android:textColor="#E8EAF6"
+        android:id="@+id/right_button"
+        android:background="@android:color/transparent"/>
+
+</LinearLayout>

@@ -1,13 +1,19 @@
 package com.example.krunal.timer;
 
+import android.content.Context;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +41,14 @@ public class Stopwatch extends AppCompatActivity {
         textView =(TextView)findViewById(R.id.timeView);
         lapTimeView = (TextView)findViewById(R.id.lapTimeView);
         listView = (ListView)findViewById(R.id.list1);
+        RelativeLayout relativeLayout = (RelativeLayout)findViewById(R.id.main_relative_layout);
+
+        LayoutInflater vi = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = vi.inflate(R.layout.bottom_menu, null);
+        RelativeLayout.LayoutParams params= new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        view.setLayoutParams(params);
+        relativeLayout.addView(view);
 
         handler = new Handler();
 
