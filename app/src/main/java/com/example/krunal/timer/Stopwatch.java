@@ -1,6 +1,7 @@
 package com.example.krunal.timer;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
@@ -21,7 +22,7 @@ import java.util.List;
 
 public class Stopwatch extends AppCompatActivity {
     ListView listView;
-    Button button1, button2;
+    Button button1, button2, timerButton;
     TextView textView, lapTimeView;
     int Seconds, Minutes, MilliSeconds ;
     boolean stopwatchOFFState = true;
@@ -50,14 +51,21 @@ public class Stopwatch extends AppCompatActivity {
         view.setLayoutParams(params);
         relativeLayout.addView(view);
 
+
+        timerButton = (Button)findViewById(R.id.left_button);
+        timerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Stopwatch.this, Timer.class);
+                startActivity(intent);
+            }
+        });
+
+
+
         handler = new Handler();
 
 
-        /*ListElementsArrayList = new ArrayList<String>();
-        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, android.R.id.text1, ListElementsArrayList );
-        listView.setAdapter(adapter);
-        */
         ListElementsArrayList = new ArrayList<Lap>();
         adapter = new LapViewListAdapter(this, R.layout.lap_time_list_view, ListElementsArrayList);
         listView.setAdapter(adapter);
